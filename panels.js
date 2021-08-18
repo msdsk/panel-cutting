@@ -32,6 +32,12 @@ async function getPanelCuttings() {
     const targetSum = 2400
 
     function getGroupsForHeight(height, lengths) {
+
+      const tooLongParts = lengths.filter(length => length > targetSum)
+      if (tooLongParts.length) {
+        throw `Too long elements for ${height} panels! ${tooLongParts.join(', ')}`
+      }
+
       function getGroup(lengths) {
 
         const listOfSums = lengths.reduce((acc, val) => {
@@ -81,7 +87,7 @@ async function getPanelCuttings() {
     .then(files => files.filter(fileName => (/.*\.xlsx$/.test(fileName))))
     .then(fileNames => Promise.all(fileNames.map(getFileData)))
     .then(dataSets => Promise.all(dataSets.map(handleDataSet)))
-    .catch(e => { throw e })
+    .catch(console.error)
 
 
 }
