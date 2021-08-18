@@ -19,7 +19,7 @@ async function getPanelCuttings() {
         })
         return { data, fileName }
       }).catch(e => {
-        console.error(`Could not read ${file}`)
+        console.error(`Could not read ${fileName}`)
         throw e
       })
   }
