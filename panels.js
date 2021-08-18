@@ -26,7 +26,6 @@ async function getPanelCuttings() {
 
 
   function handleDataSet({ data, fileName }) {
-    console.log(arguments)
     let resultDoc = 'height;leftover;parts;noParts'
 
     const c = 0.01
@@ -78,10 +77,8 @@ async function getPanelCuttings() {
 
 
 
-
-
-
   return fs.readdir(path.join(__dirname, './input'))
+    .then(files => files.filter(fileName => (/.*\.xlsx$/.test(fileName))))
     .then(fileNames => Promise.all(fileNames.map(getFileData)))
     .then(dataSets => Promise.all(dataSets.map(handleDataSet)))
     .catch(e => { throw e })
